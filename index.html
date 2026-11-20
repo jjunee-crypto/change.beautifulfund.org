@@ -111,6 +111,18 @@
   table.tb th{background:var(--bg2);}
   .note{background:#FFF7E8;border:1px dashed var(--orange);border-radius:10px;padding:12px 16px;
     font-size:13px;color:#7a5a00;margin:0 0 22px;}
+  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .fact{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#fff;}
+  .fact-l{font-size:13px;font-weight:800;color:var(--orange-d);margin-bottom:6px;}
+  .fact-v{font-size:15px;color:#333;line-height:1.55;} .fact-v div+div{margin-top:4px;}
+  .tbd{color:#999;}
+  .sched{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;}
+  .sched li{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;position:relative;padding:0 6px;}
+  .sched li::before{content:'';position:absolute;top:15px;left:-50%;width:100%;height:2px;background:var(--line);z-index:0;}
+  .sched li:first-child::before{display:none;}
+  .sched .dot{width:32px;height:32px;border-radius:50%;background:var(--orange-d);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;}
+  .sched b{font-size:15px;margin-top:4px;}
+  @media(max-width:900px){ .facts{grid-template-columns:1fr;} .sched{grid-template-columns:1fr;gap:10px;} .sched li{flex-direction:row;text-align:left;gap:12px;} .sched li::before{display:none;} }
   /* footer */
   footer.site{border-top:1px solid var(--line);background:var(--bg2);padding:34px 0;margin-top:20px;}
   footer.site .f{display:flex;flex-wrap:wrap;gap:16px 40px;align-items:center;justify-content:space-between;}
@@ -202,23 +214,32 @@ const GOALS = [
 
 /* ---------- 지원사업 (예시 데이터) ---------- */
 const projects = [
-  { id:'scenario', type:'의제중심', name:'변화의시나리오 프로젝트지원사업', tagline:'변화를 위한 공익 의제를 발굴합니다',
+  { id:'scenario', type:'의제중심', name:'공익프로젝트 지원사업', tagline:'변화를 위한 공익 의제를 발굴합니다',
     purpose:'우리 사회의 차별과 불평등을 해소하기 위한 공익 의제를 발굴하고, 문제를 해결할 수 있도록 지원합니다.', target:'공익 의제를 다루는 비영리단체·활동가' },
-  { id:'content', type:'의제중심', name:'공익콘텐츠 제작지원사업', tagline:'공익의 이야기를 콘텐츠로 확산합니다',
+  { id:'content', type:'의제중심', name:'공익콘텐츠제작 지원사업', tagline:'공익의 이야기를 콘텐츠로 확산합니다',
     purpose:'공익 의제를 널리 알리는 콘텐츠 제작을 지원하여 공익적 가치를 확산합니다.', target:'공익 콘텐츠를 만드는 단체·창작자' },
-  { id:'incubating', type:'주체중심', name:'공익단체 인큐베이팅지원사업', tagline:'새로운 공익 주체의 성장을 돕습니다',
+  { id:'incubating', type:'주체중심', name:'공익단체인큐베이팅 지원사업', tagline:'새로운 공익 주체의 성장을 돕습니다',
     purpose:'초기 공익단체가 조직 기반을 갖추고 자립할 수 있도록 지원합니다.', target:'설립 초기 공익단체' },
-  { id:'youth', type:'주체중심', name:'청소년 공익활동지원사업', tagline:'청소년이 변화의 주체가 되도록',
+  { id:'youth', type:'주체중심', name:'청소년공익활동 지원사업', tagline:'청소년이 변화의 주체가 되도록',
     purpose:'청소년이 공익활동의 경험을 통해 사회변화의 주체로 성장하도록 지원합니다.', target:'공익활동에 참여하는 청소년·단체' },
-  { id:'it', type:'토대중심', name:'공익단체 IT인프라지원사업', tagline:'활동의 디지털 기반을 세웁니다',
+  { id:'it', type:'토대중심', name:'공익단체IT인프라 지원사업', tagline:'활동의 디지털 기반을 세웁니다',
     purpose:'공익단체가 안정적으로 활동할 수 있도록 IT 인프라와 역량을 지원합니다.', target:'IT 기반이 필요한 공익단체' },
-  { id:'activistnet', type:'토대중심', name:'공익활동가 네트워크지원사업', tagline:'활동가들이 함께 성장하도록',
+  { id:'activistnet', type:'토대중심', name:'공익활동가네트워크 지원사업', tagline:'활동가들이 함께 성장하도록',
     purpose:'공익활동가들이 경험을 나누고 협력할 수 있는 네트워크를 지원합니다.', target:'공익활동가·활동가 모임' },
-  { id:'regionnet', type:'토대중심', name:'지역시민사회 네트워크지원사업', tagline:'지역 시민사회의 연대를 잇습니다',
+  { id:'regionnet', type:'토대중심', name:'지역시민사회네트워크 지원사업', tagline:'지역 시민사회의 연대를 잇습니다',
     purpose:'지역 기반 시민사회 조직의 협력과 연대 활동을 지원합니다.', target:'지역 시민사회 단체·네트워크' },
-  { id:'youngsafety', type:'토대중심', name:'청년활동가 안전망지원사업', tagline:'청년활동가의 지속가능성을 지킵니다',
+  { id:'youngsafety', type:'토대중심', name:'청년활동가안전망 지원사업', tagline:'청년활동가의 지속가능성을 지킵니다',
     purpose:'청년활동가가 안정적으로 활동을 이어갈 수 있도록 안전망을 지원합니다.', target:'청년 공익활동가' },
 ];
+
+/* ---------- 사업별 페이지 필드 (사업페이지필드양식.xlsx 기준, 빈칸은 [작성 예정]) ---------- */
+const PFIELDS = {
+  scenario:{ target:'설립 후 1년 이상 활동 경과한 비영리 공익단체',
+    support:['프로젝트당 최대 2,500만원의 사업비 (사업담당자 인건비 800만원 포함)','최대 20개 프로젝트 선정'],
+    period:'10개월', apply:'온라인 접수 (별도 공지)' },
+};
+const TBD = '<span class="tbd">[작성 예정]</span>';
+const SCHEDULE = [['공모 공고','[월]'],['접수','[월]'],['심사·선정','[월]'],['프로젝트 수행','[월] ~ [월]'],['결과 보고·공유','[월]']];
 
 /* ---------- 기록 (양식 A·B 구조의 예시 데이터) ----------
    kind: 기록(활동 기록·양식 A) | 후기(지원단체 후기·양식 B) | 리포트(성과평가 리포트) */
@@ -391,13 +412,33 @@ function pageHow(sub='types'){
 }
 function pageProject(id){
   const p = projects.find(x=>x.id===id); if(!p) return pageHow();
+  const f = PFIELDS[id] || {};
   const rel = records.filter(r=>r.project===id);
+  const fact = (label, val) => `<div class="fact"><div class="fact-l">${label}</div><div class="fact-v">${val||TBD}</div></div>`;
   return `<section class="page">
     <span class="back" onclick="go('how')">← 변화의 방법으로 돌아가기</span>
-    <div class="detail-hero"><span class="tag">${p.type} 지원사업</span><h1>${p.name}</h1><p class="one">${p.tagline}</p></div>
-    <h2 class="sec">사업목적</h2><p>${p.purpose}</p>
-    <dl class="kv"><dt>사업유형</dt><dd>${p.type} 지원사업</dd><dt>지원대상</dt><dd>${p.target}</dd></dl>
-    ${rel.length?`<h2 class="sec">이 사업이 만든 변화</h2><div class="grid">${rel.map(recCard).join('')}</div>`:''}
+    <div class="detail-hero">
+      <span class="tag">${p.type} 지원사업</span>
+      <h1>${p.name}</h1>
+      <p class="one">${p.purpose}</p>
+    </div>
+
+    <h2 class="sec">한눈에 보기</h2>
+    <div class="facts">
+      ${fact('지원대상', f.target)}
+      ${fact('지원내용', f.support ? f.support.map(t=>`<div>${t}</div>`).join('') : '')}
+      ${fact('지원기간', f.period)}
+      ${fact('신청방법', f.apply)}
+    </div>
+
+    <h2 class="sec">사업일정</h2>
+    <ol class="sched">${SCHEDULE.map(([n,d],i)=>`<li><span class="dot">${i+1}</span><b>${n}</b><span class="muted">${d}</span></li>`).join('')}</ol>
+    <p class="muted" style="margin-top:8px">일정은 공고가 확정되면 입력합니다.</p>
+
+    <h2 class="sec">이 사업이 만든 변화</h2>
+    ${rel.length ? `<div class="grid">${rel.map(recCard).join('')}</div>` : `<div class="empty">아직 등록된 기록이 없습니다.</div>`}
+    <p style="margin-top:16px"><a style="color:var(--orange-d);font-weight:700;cursor:pointer" onclick="go('record')">이 사업의 기록 더 보기 →</a></p>
+
     ${cta(p.name+'에 함께해 주세요','당신의 기부가 이 변화를 잇습니다.')}
   </section>`;
 }
